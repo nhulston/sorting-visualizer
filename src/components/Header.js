@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import styled from "styled-components";
 import {AiFillHome} from "react-icons/ai"
 import Slider from 'rc-slider';
-import Rectangle from "./Rectangle";
 
 export default class Header extends Component {
     render() {
@@ -11,15 +10,17 @@ export default class Header extends Component {
                 <IconWrapper href="/">
                     <AiFillHome/>
                 </IconWrapper>
-                <Button>
+                <Button
+                    onClick={this.props.onRegenerate}
+                >
                     Regenerate
                 </Button>
                 <SliderContainer>
                     <Text>Array Size</Text>
                     <Slider
                         min={4}
-                        max={26}
-                        defaultValue={15}
+                        max={20}
+                        defaultValue={12}
                         onChange={this.props.onChangeArrSize}
                     />
                 </SliderContainer>
@@ -55,7 +56,8 @@ const SliderContainer = styled.div`
   align-items: center;
 `;
 
-const Text = styled.text`
+const Text = styled.p`
+  margin: 0;
   font-size: 24px;
 `;
 

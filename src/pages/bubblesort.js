@@ -1,16 +1,25 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Header from "../components/Header";
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Rectangle from "../components/Rectangle";
 import RectangleWrapper from "../components/RectangleWrapper";
 
 export default function Home() {
     const [numberRectangles, setNumberRectangles] = useState(15)
-    let arr = []
-    for (let i = 0; i < numberRectangles; i++) {
-        arr.push(<Rectangle height={randomNumber()} quantity={numberRectangles} key={i}/>)
+    const [arr, setArr] = useState([])
+
+    let regenerate = () => {
+        let tempArr = []
+        for (let i = 0; i < numberRectangles; i++) {
+            tempArr.push(<Rectangle height={randomNumber()} quantity={numberRectangles} key={i}/>)
+        }
+        setArr(tempArr)
     }
+
+    useEffect(() => {
+        regenerate()
+    }, [numberRectangles])
 
     return (
         <div className={styles.container}>
@@ -20,7 +29,10 @@ export default function Home() {
                 <link rel="icon" href="/favicon.ico" />
             </Head>
 
-            <Header onChangeArrSize={setNumberRectangles}/>
+            <Header
+                onChangeArrSize={setNumberRectangles}
+                onRegenerate={regenerate}
+            />
             <main className={styles.main}>
                 <RectangleWrapper>
                     {arr}
@@ -31,5 +43,5 @@ export default function Home() {
 }
 
 function randomNumber() {
-    return Math.floor(Math.random() * 95) + 5;
+    return Math.floor(Math.random() * 175) + 50;
 }
