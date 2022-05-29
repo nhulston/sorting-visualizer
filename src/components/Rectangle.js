@@ -16,6 +16,7 @@ export default class Rectangle extends Component {
                 quantity={this.props.quantity}
                 color={color}
                 moveAmount={this.props.moveAmount}
+                delay={this.props.delay}
             >
                 {child}
             </LeftRect>
@@ -25,6 +26,7 @@ export default class Rectangle extends Component {
                 quantity={this.props.quantity}
                 color={color}
                 moveAmount={this.props.moveAmount}
+                delay={this.props.delay}
             >
                 {child}
             </RightRect>
@@ -53,7 +55,7 @@ const Rect = styled.div`
 `;
 
 const LeftRect = styled(Rect)`
-  animation: left 1s forwards ease;
+  animation: left ${props => props.delay}ms forwards ease;
   @keyframes left {
     0% {
       z-index: -1;
@@ -72,7 +74,7 @@ const LeftRect = styled(Rect)`
 `;
 
 const RightRect = styled(Rect)`
-  animation: right 1s forwards ease;
+  animation: right ${props => props.delay}ms forwards ease;
   @keyframes right {
     0% {
       transform: translateX(0);

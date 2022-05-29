@@ -1,15 +1,17 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
 import Header from "../components/Header";
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import Rectangle from "../components/Rectangle";
 import RectangleWrapper from "../components/RectangleWrapper";
 
 export default function Home() {
     const [numberRectangles, setNumberRectangles] = useState(12)
+    const [delay, setDelay] = useState(500)
     const [arr, setArr] = useState([])
+    const delayRef = useRef();
+    delayRef.current = delay;
 
-    const delay = 100
     let lastIndex = arr.length - 1
 
     let regenerate = () => {
@@ -24,6 +26,11 @@ export default function Home() {
         }
         setArr(tempArr)
         lastIndex = arr.length - 1
+    }
+
+    let setSortingSpeed = (value) => {
+        // value is 10-2000
+        setDelay(1510 - value)
     }
 
     let setColor = (rectangle, color) => {
@@ -47,6 +54,7 @@ export default function Home() {
             color={rectangle.props.color}
             left={true}
             moveAmount={moveAmount}
+            delay={delayRef.current}
         />
     }
 
@@ -59,6 +67,7 @@ export default function Home() {
             color={rectangle.props.color}
             right={true}
             moveAmount={moveAmount}
+            delay={delayRef.current}
         />
     }
 
@@ -80,7 +89,7 @@ export default function Home() {
         arr[i] = setColor(arr[i], '#F38300')
         arr[j] = setColor(arr[j], '#F38300')
         setArr([...arr])
-        await sleep(delay)
+        await sleep(delayRef.current)
 
         // Swap
         if (arr[i].props.height > arr[j].props.height) {
@@ -88,7 +97,7 @@ export default function Home() {
             arr[i] = setRightAnimation(setColor(arr[i], '#F38300'), dif)
             arr[j] = setLeftAnimation(setColor(arr[j], '#F38300'), dif)
             setArr([...arr])
-            await sleep(1.5 * delay)
+            await sleep(1.5 * delayRef.current)
 
             // Swap & set green
             let temp = arr[i]
@@ -104,7 +113,7 @@ export default function Home() {
             arr[j] = setColor(temp, '#00ee3f')
             setArr([...arr])
         }
-        await sleep(delay)
+        await sleep(delayRef.current)
 
         // Return to blue, unless last index
         arr[i] = setColor(arr[i], '#0070f3')
@@ -118,7 +127,7 @@ export default function Home() {
             arr[j] = setColor(arr[j], '#0070f3')
         }
         setArr([...arr])
-        await sleep(delay)
+        await sleep(delayRef.current)
 
         return swapped
     }
@@ -157,6 +166,7 @@ export default function Home() {
 
             <Header
                 onChangeArrSize={setNumberRectangles}
+                onChangeSortingSpeed={setSortingSpeed}
                 onRegenerate={regenerate}
                 sort={bubbleSort}
             />
