@@ -63,7 +63,7 @@ const LeftRect = styled(Rect)`
       filter: brightness(100%);
     }
     50% {
-      filter: brightness(90%);
+      filter: brightness(95%);
     }
     100% {
       z-index: -1;
@@ -78,14 +78,9 @@ const RightRect = styled(Rect)`
   @keyframes right {
     0% {
       transform: translateX(0);
-      filter: brightness(100%);
-    }
-    50% {
-      filter: brightness(110%);
     }
     100% {
       transform: translateX(calc(${props => 75 / props.quantity * props.moveAmount}vw + ${props => 80 / props.quantity * props.moveAmount}px));
-      filter: brightness(100%);
     }
   }
 `;
