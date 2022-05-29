@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -22,33 +23,35 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <a href="/bubblesort" className={styles.card}>
-            <h2>Bubble Sort &rarr;</h2>
-            <p>The simplest sorting algorithm with very high time complexity.</p>
-          </a>
+          <Link href="/bubblesort">
+            <a className={styles.card}>
+              <h2>Bubble Sort &rarr;</h2>
+              <p>The simplest sorting algorithm with very high time complexity.</p>
+            </a>
+          </Link>
 
-          <a href="/mergesort" className={styles.card}>
-            <h2>Merge Sort &rarr;</h2>
-            <p>A recursive algorithm that sorts two halves, then merges the two halves.</p>
-          </a>
+          <Link href="/mergesort">
+            <a className={styles.card}>
+              <h2>Merge Sort &rarr;</h2>
+              <p>A recursive algorithm that sorts two halves, then merges the two halves.</p>
+            </a>
+          </Link>
 
-          <a
-            href="https://github.com/vercel/next.js/tree/canary/examples"
-            className={styles.card}
-          >
-            <h2>Heap Sort &rarr;</h2>
-            <p>Lorem ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum </p>
-          </a>
+          <Link href="/heapsort">
+            <a className={styles.card}>
+              <h2>Heap Sort &rarr;</h2>
+              <p>Lorem ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum </p>
+            </a>
+          </Link>
 
-          <a
-            href="/quicksort"
-            className={styles.card}
-          >
-            <h2>Quick Sort &rarr;</h2>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          <Link href="/quicksort">
+            <a className={styles.card}>
+              <h2>Quick Sort &rarr;</h2>
+              <p>
+                Instantly deploy your Next.js site to a public URL with Vercel.
+              </p>
+            </a>
+          </Link>
         </div>
       </main>
 
