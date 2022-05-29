@@ -6,15 +6,141 @@ import Rectangle from "../components/Rectangle";
 import RectangleWrapper from "../components/RectangleWrapper";
 
 export default function Home() {
-    const [numberRectangles, setNumberRectangles] = useState(15)
+    const [numberRectangles, setNumberRectangles] = useState(12)
     const [arr, setArr] = useState([])
+
+    const delay = 100
+    let lastIndex = arr.length - 1
 
     let regenerate = () => {
         let tempArr = []
         for (let i = 0; i < numberRectangles; i++) {
-            tempArr.push(<Rectangle height={randomNumber()} quantity={numberRectangles} key={i}/>)
+            tempArr.push(<Rectangle
+                height={randomNumber()}
+                quantity={numberRectangles}
+                key={i}
+                id={i}
+            />)
         }
         setArr(tempArr)
+        lastIndex = arr.length - 1
+    }
+
+    let setColor = (rectangle, color) => {
+        return <Rectangle
+            height={rectangle.props.height}
+            quantity={rectangle.props.quantity}
+            key={rectangle.props.id}
+            id={rectangle.props.id}
+            color={color}
+            left={false}
+            right={false}
+        />
+    }
+
+    let setLeftAnimation = (rectangle, moveAmount) => {
+        return <Rectangle
+            height={rectangle.props.height}
+            quantity={rectangle.props.quantity}
+            key={rectangle.props.id}
+            id={rectangle.props.id}
+            color={rectangle.props.color}
+            left={true}
+            moveAmount={moveAmount}
+        />
+    }
+
+    let setRightAnimation = (rectangle, moveAmount) => {
+        return <Rectangle
+            height={rectangle.props.height}
+            quantity={rectangle.props.quantity}
+            key={rectangle.props.id}
+            id={rectangle.props.id}
+            color={rectangle.props.color}
+            right={true}
+            moveAmount={moveAmount}
+        />
+    }
+
+    let isSorted = () => {
+        for (let i = 0; i < arr.length - 1; i++) {
+            if (arr[i].props.height > arr[i+1].props.height) {
+                return false
+            }
+        }
+        return true
+    }
+
+    // Function name a little misleading, only swaps if i > j
+    let swap = async (i, j) => {
+        const dif = Math.abs(i - j)
+        let swapped = false
+
+        // Highlight
+        arr[i] = setColor(arr[i], '#F38300')
+        arr[j] = setColor(arr[j], '#F38300')
+        setArr([...arr])
+        await sleep(delay)
+
+        // Swap
+        if (arr[i].props.height > arr[j].props.height) {
+            // Animate swap
+            arr[i] = setRightAnimation(setColor(arr[i], '#F38300'), dif)
+            arr[j] = setLeftAnimation(setColor(arr[j], '#F38300'), dif)
+            setArr([...arr])
+            await sleep(1.5 * delay)
+
+            // Swap & set green
+            let temp = arr[i]
+            arr[i] = setColor(arr[j], '#00ee3f')
+            arr[j] = setColor(temp, '#00ee3f')
+            setArr([...arr])
+
+            swapped = true
+        } else {
+            // Set green
+            let temp = arr[j]
+            arr[i] = setColor(arr[i], '#00ee3f')
+            arr[j] = setColor(temp, '#00ee3f')
+            setArr([...arr])
+        }
+        await sleep(delay)
+
+        // Return to blue, unless last index
+        arr[i] = setColor(arr[i], '#0070f3')
+        if (i === 0 && isSorted()) {
+            arr[i] = setColor(arr[i], '#00ee3f')
+        }
+        if (j === lastIndex) {
+            arr[j] = setColor(arr[j], '#00ee3f')
+            lastIndex--;
+        } else {
+            arr[j] = setColor(arr[j], '#0070f3')
+        }
+        setArr([...arr])
+        await sleep(delay)
+
+        return swapped
+    }
+
+    let bubbleSort = async () => {
+        for (let i = 0; i < arr.length - 1; i++) {
+            let swapped = false
+            for (let j = 0; j < arr.length - i - 1; j++) {
+                if (await swap(j, j+1)) {
+                    swapped = true
+                }
+            }
+
+            if (!swapped) {
+                // Set all green
+                for (let j = 0; j < arr.length; j++) {
+                    arr[j] = setColor(arr[j], '#00ee3f')
+                    setArr([...arr])
+                }
+                break;
+            }
+        }
     }
 
     useEffect(() => {
@@ -32,6 +158,7 @@ export default function Home() {
             <Header
                 onChangeArrSize={setNumberRectangles}
                 onRegenerate={regenerate}
+                sort={bubbleSort}
             />
             <main className={styles.main}>
                 <RectangleWrapper>
@@ -44,4 +171,8 @@ export default function Home() {
 
 function randomNumber() {
     return Math.floor(Math.random() * 175) + 50;
+}
+
+function sleep(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
 }

@@ -3,26 +3,89 @@ import styled from "styled-components";
 
 export default class Rectangle extends Component {
     render() {
-        return (
-            <Container
-                height={this.props.height * .35}
+        let height = this.props.height * 0.35
+        let color = this.props.color ? this.props.color : '#0070f3'
+        let child = (
+            <Text suppressHydrationWarning quantity={this.props.quantity}>
+                {this.props.height}
+            </Text>
+        )
+        if (this.props.left) {
+            return <LeftRect
+                height={height}
                 quantity={this.props.quantity}
+                color={color}
+                moveAmount={this.props.moveAmount}
             >
-                <Text suppressHydrationWarning quantity={this.props.quantity}>
-                    {this.props.height}
-                </Text>
-            </Container>
-        );
+                {child}
+            </LeftRect>
+        } else if (this.props.right) {
+            return <RightRect
+                height={height}
+                quantity={this.props.quantity}
+                color={color}
+                moveAmount={this.props.moveAmount}
+            >
+                {child}
+            </RightRect>
+        } else {
+            return <Rect
+                height={height}
+                quantity={this.props.quantity}
+                color={color}
+            >
+                {child}
+            </Rect>
+        }
     }
 }
 
-const Container = styled.div`
+const Rect = styled.div`
+  position: relative;
   height: ${props => props.height}vh;
   width: ${props => 75 / props.quantity}vw;
-  background: #0070f3;
+  background: ${props => props.color};
   margin: ${props => -props.height}vh ${props => 40 / props.quantity}px 0;
   text-align: center;
   padding-top: ${props => 200 / props.quantity}px;
+  border-radius: 8px 8px 0 0;
+  transform: translateX(0);
+`;
+
+const LeftRect = styled(Rect)`
+  animation: left 1s forwards ease;
+  @keyframes left {
+    0% {
+      z-index: -1;
+      transform: translateX(0);
+      filter: brightness(100%);
+    }
+    50% {
+      filter: brightness(90%);
+    }
+    100% {
+      z-index: -1;
+      transform: translateX(calc(${props => -75 / props.quantity * props.moveAmount}vw + ${props => -80 / props.quantity * props.moveAmount}px));
+      filter: brightness(100%);
+    }
+  }
+`;
+
+const RightRect = styled(Rect)`
+  animation: right 1s forwards ease;
+  @keyframes right {
+    0% {
+      transform: translateX(0);
+      filter: brightness(100%);
+    }
+    50% {
+      filter: brightness(110%);
+    }
+    100% {
+      transform: translateX(calc(${props => 75 / props.quantity * props.moveAmount}vw + ${props => 80 / props.quantity * props.moveAmount}px));
+      filter: brightness(100%);
+    }
+  }
 `;
 
 const Text = styled.p`

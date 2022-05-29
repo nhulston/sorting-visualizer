@@ -32,7 +32,9 @@ export default class Header extends Component {
                         defaultValue={50}
                     />
                 </SliderContainer>
-                <Button>
+                <Button
+                    onClick={this.props.sort}
+                >
                     Sort
                 </Button>
             </Container>
