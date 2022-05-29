@@ -35,13 +35,11 @@ export default function Home() {
             if (arr[j].props.height < pivot) {
                 i++;
                 if (i !== j) {
-                    console.log('swapping ' + i +' and ' + j)
                     await swap(i, j, arr, setArr, delayRef, lastIndex, setLastIndex);
                 }
             }
         }
         if (i + 1 !== high) {
-            console.log('SWAPPING LAST ' + (i + 1) +' and ' + high)
             await swap(i + 1, high, arr, setArr, delayRef, lastIndex, setLastIndex);
         }
         return i + 1;

@@ -3,9 +3,8 @@ import {isSorted, sleep} from "./helperMethods";
 import {setColor, setLeftAnimation, setRightAnimation} from "./animationHelperMethods";
 
 export default async function swap(i, j, arr, setArr, delayRef, lastIndex, setLastIndex, isBubble) {
-    const dif = Math.abs(i - j)
-    console.log(dif)
     let swapped = false
+    let dif = j - i
 
     // Highlight
     arr[i] = setColor(arr[i], '#F38300')

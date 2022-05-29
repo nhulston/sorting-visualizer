@@ -1,27 +1,27 @@
 import Rectangle from "../components/Rectangle";
 
-export function setLeftAnimation(rectangle, moveAmount, delay) {
+export function setLeftAnimation(rectangle, dif, delay) {
     return <Rectangle
+        dif={dif}
         height={rectangle.props.height}
         quantity={rectangle.props.quantity}
         key={rectangle.props.id}
         id={rectangle.props.id}
         color={rectangle.props.color}
         left={true}
-        moveAmount={moveAmount}
         delay={delay}
     />
 }
 
-export function setRightAnimation(rectangle, moveAmount, delay) {
+export function setRightAnimation(rectangle, dif, delay) {
     return <Rectangle
+        dif={dif}
         height={rectangle.props.height}
         quantity={rectangle.props.quantity}
         key={rectangle.props.id}
         id={rectangle.props.id}
         color={rectangle.props.color}
         right={true}
-        moveAmount={moveAmount}
         delay={delay}
     />
 }
