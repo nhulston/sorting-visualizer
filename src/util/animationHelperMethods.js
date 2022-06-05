@@ -1,4 +1,5 @@
 import Rectangle from "../components/Rectangle";
+import {isSorted} from "./helperMethods";
 
 export function setLeftAnimation(rectangle, dif, delay) {
     return <Rectangle
@@ -36,4 +37,11 @@ export function setColor(rectangle, color) {
         left={false}
         right={false}
     />
+}
+
+export function setAllGreen(arr, setArr) {
+    for (let i = 0; i < arr.length; i++) {
+        arr[i] = setColor(arr[i], '#00ee3f')
+        setArr([...arr])
+    }
 }

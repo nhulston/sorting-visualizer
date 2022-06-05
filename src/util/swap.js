@@ -2,18 +2,18 @@
 import {isSorted, sleep} from "./helperMethods";
 import {setColor, setLeftAnimation, setRightAnimation} from "./animationHelperMethods";
 
-export default async function swap(i, j, arr, setArr, delayRef, lastIndex, setLastIndex, isBubble) {
-    let swapped = false
+export default async function swap(i, j, arr, setArr, delayRef, lastIndex, setLastIndex, shouldSwap, isBubble) {
+    console.log('swapping ' + i + ' and ' + j)
     let dif = j - i
 
-    // Highlight
+    // Set orange
     arr[i] = setColor(arr[i], '#F38300')
     arr[j] = setColor(arr[j], '#F38300')
     setArr([...arr])
     await sleep(delayRef.current)
 
     // Swap
-    if (!isBubble || (arr[i].props.height > arr[j].props.height)) {
+    if (shouldSwap) {
         // Animate swap
         arr[i] = setRightAnimation(setColor(arr[i], '#F38300'), dif, delayRef.current)
         arr[j] = setLeftAnimation(setColor(arr[j], '#F38300'), dif, delayRef.current)
@@ -24,23 +24,16 @@ export default async function swap(i, j, arr, setArr, delayRef, lastIndex, setLa
         let temp = arr[i]
         arr[i] = setColor(arr[j], '#00ee3f')
         arr[j] = setColor(temp, '#00ee3f')
-        setArr([...arr])
-
-        swapped = true
     } else {
         // Set green
-        let temp = arr[j]
         arr[i] = setColor(arr[i], '#00ee3f')
-        arr[j] = setColor(temp, '#00ee3f')
-        setArr([...arr])
+        arr[j] = setColor(arr[j], '#00ee3f')
     }
+    setArr([...arr])
     await sleep(delayRef.current)
 
     // Return to blue, unless last index (if isBubble)
     arr[i] = setColor(arr[i], '#0070f3')
-    if (isBubble && i === 0 && isSorted(arr)) {
-        arr[i] = setColor(arr[i], '#00ee3f')
-    }
     if (isBubble && j === lastIndex) {
         arr[j] = setColor(arr[j], '#00ee3f')
         setLastIndex(lastIndex - 1);
@@ -49,6 +42,4 @@ export default async function swap(i, j, arr, setArr, delayRef, lastIndex, setLa
     }
     setArr([...arr])
     await sleep(delayRef.current)
-
-    return swapped
 }

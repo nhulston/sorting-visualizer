@@ -4,7 +4,7 @@ import React, {useEffect, useRef, useState} from "react";
 import swap from "../util/swap";
 import regenerate from "../util/regenerate";
 import {isSorted} from "../util/helperMethods";
-import {setColor} from "../util/animationHelperMethods";
+import {setAllGreen, setColor} from "../util/animationHelperMethods";
 import Sort from "../components/Sort";
 
 export default function Home() {
@@ -28,22 +28,24 @@ export default function Home() {
 
 
     let bubbleSort = async () => {
-        if (isSorted(arr)) return
+        if (isSorted(arr)) {
+            setAllGreen(arr, setArr)
+            return
+        }
+
         setActive(true)
         for (let i = 0; i < arr.length - 1; i++) {
             let swapped = false
             for (let j = 0; j < arr.length - i - 1; j++) {
-                if (await swap(j, j+1, arr, setArr, delayRef, lastIndex, setLastIndex, true)) {
-                    swapped = true
+                let shouldSwap = arr[j].props.height > arr[j+1].props.height
+                if (shouldSwap) {
+                    swapped = true;
                 }
+                await swap(j, j+1, arr, setArr, delayRef, lastIndex, setLastIndex, shouldSwap, true)
             }
 
             if (!swapped) {
-                // Set all green
-                for (let j = 0; j < arr.length; j++) {
-                    arr[j] = setColor(arr[j], '#00ee3f')
-                    setArr([...arr])
-                }
+                setAllGreen(arr, setArr)
                 break;
             }
         }
