@@ -13,5 +13,7 @@ export default function regenerate(active, numberRectangles, setArr, setLastInde
         />)
     }
     setArr(tempArr)
-    setLastIndex(tempArr.length - 1)
+    if (setLastIndex !== undefined) {
+        setLastIndex(tempArr.length - 1)
+    }
 }

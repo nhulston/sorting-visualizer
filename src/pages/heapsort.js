@@ -22,42 +22,40 @@ export default function Home() {
         regenerate(active, numberRectangles, setArr)
     }, [numberRectangles])
 
+    let heapify = async (n, i) => {
+        let largest = i
+        let left = 2 * i + 1
+        let right = 2 * i + 2
 
-    let partition = async (low, high) => {
-        let pivot = arr[high].props.height
-        let i = low - 1
-
-        for (let j = low; j <= high - 1; j++) {
-            let shouldSwap = arr[j].props.height < pivot
-            if (shouldSwap) {
-                i++;
-            }
-            if (i !== j && i >= 0 && j >= 0) {
-                await swap(i, j, arr, setArr, delayRef, shouldSwap, false, false)
-            }
+        if (left < n && arr[left].props.height > arr[largest].props.height) {
+            largest = left
         }
-        if (i + 1 !== high) {
-            await swap(i + 1, high, arr, setArr, delayRef, true, false, false);
-        }
-        return i + 1;
-    }
 
-    let quicksortHelper = async (low, high) => {
-        if (low < high) {
-            let partitionIndex = await partition(low, high);
-            await quicksortHelper(low, partitionIndex - 1);
-            await quicksortHelper(partitionIndex + 1, high);
+        if (right < n && arr[right].props.height > arr[largest].props.height) {
+            largest = right
+        }
+
+        if (largest !== i) {
+            await swap(i, largest, arr, setArr, delayRef,true, false, false, lastIndex, setLastIndex)
+            await heapify(n, largest)
         }
     }
 
-    let quicksort = async () => {
+    let heapSort = async () => {
         if (isSorted(arr)) {
             setAllGreen(arr, setArr)
             return
         }
 
         setActive(true)
-        await quicksortHelper(0, arr.length - 1)
+        for (let i = Math.floor(arr.length / 2) - 1; i >= 0; i--) {
+            await heapify(arr.length, i)
+        }
+
+        for (let i = arr.length - 1; i > 0; i--) {
+            await swap(0, i, arr, setArr, delayRef, true, false, false, lastIndex, setLastIndex)
+            await heapify(i, 0)
+        }
         setAllGreen(arr, setArr)
         setActive(false)
     }
@@ -77,7 +75,7 @@ export default function Home() {
                 numberRectangles={numberRectangles}
                 arr={arr}
                 setArr={setArr}
-                sortingMethod={quicksort}
+                sortingMethod={heapSort}
             />
         </div>
     )

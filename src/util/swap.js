@@ -2,8 +2,7 @@
 import {isSorted, sleep} from "./helperMethods";
 import {setColor, setLeftAnimation, setRightAnimation} from "./animationHelperMethods";
 
-export default async function swap(i, j, arr, setArr, delayRef, lastIndex, setLastIndex, shouldSwap, isBubble) {
-    console.log('swapping ' + i + ' and ' + j)
+export default async function swap(i, j, arr, setArr, delayRef, shouldSwap, isBubble, isSelection, lastIndex, setLastIndex, ) {
     let dif = j - i
 
     // Set orange
@@ -32,8 +31,14 @@ export default async function swap(i, j, arr, setArr, delayRef, lastIndex, setLa
     setArr([...arr])
     await sleep(delayRef.current)
 
+    // Set to i to green if selectionSort
+    if (isSelection) {
+        console.log('setting ' + i + ' to green')
+        arr[i] = setColor(arr[i], '#00ee3f')
+    } else {
+        arr[i] = setColor(arr[i], '#0070f3')
+    }
     // Return to blue, unless last index (if isBubble)
-    arr[i] = setColor(arr[i], '#0070f3')
     if (isBubble && j === lastIndex) {
         arr[j] = setColor(arr[j], '#00ee3f')
         setLastIndex(lastIndex - 1);

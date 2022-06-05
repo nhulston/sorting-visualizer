@@ -30,9 +30,9 @@ export default function Home() {
             </a>
           </Link>
 
-          <Link href="/mergesort">
+          <Link href="/selectionsort">
             <a className={styles.card}>
-              <h2>Merge Sort &rarr;</h2>
+              <h2>Selection Sort &rarr;</h2>
               <p>A recursive algorithm that sorts two halves, then merges the two halves.</p>
             </a>
           </Link>
