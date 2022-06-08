@@ -3,13 +3,13 @@ import styles from '../styles/Home.module.css'
 import React, {useEffect, useRef, useState} from "react";
 import swap from "../util/swap";
 import regenerate from "../util/regenerate";
-import {isSorted} from "../util/helperMethods";
+import {isSorted, SELECTION} from "../util/helperMethods";
 import {setAllGreen} from "../util/animationHelperMethods";
 import Sort from "../components/Sort";
 
 export default function Home() {
     // Variables
-    const [numberRectangles, setNumberRectangles] = useState(12)
+    const [numberRectangles, setNumberRectangles] = useState(27)
     const [delay, setDelay] = useState(500)
     const [arr, setArr] = useState([])
     const [active, setActive] = useState(false)
@@ -24,7 +24,7 @@ export default function Home() {
 
 
     let selectionSort = async () => {
-        if (isSorted(arr)) {
+        if (isSorted(arr) || active) {
             setAllGreen(arr, setArr)
             return
         }
@@ -34,12 +34,12 @@ export default function Home() {
         for (let i = 0; i < arr.length - 1; i++) {
             let minIndex = i
             for (let j = i + 1; j < arr.length; j++) {
-                await swap(j, minIndex, arr, setArr, delayRef, false, false, false)
+                await swap(j, minIndex, arr, setArr, delayRef)
                 if (arr[j].props.height < arr[minIndex].props.height) {
                     minIndex = j
                 }
             }
-            await swap(i, minIndex, arr, setArr, delayRef, true, false, true)
+            await swap(i, minIndex, arr, setArr, delayRef, true, SELECTION)
         }
 
         setAllGreen(arr, setArr)

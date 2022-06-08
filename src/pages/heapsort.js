@@ -3,13 +3,13 @@ import styles from '../styles/Home.module.css'
 import React, {useEffect, useRef, useState} from "react";
 import swap from "../util/swap";
 import regenerate from "../util/regenerate";
-import {isSorted} from "../util/helperMethods";
+import {HEAP, isSorted} from "../util/helperMethods";
 import {setAllGreen} from "../util/animationHelperMethods";
 import Sort from "../components/Sort";
 
 export default function Home() {
     // Variables
-    const [numberRectangles, setNumberRectangles] = useState(12)
+    const [numberRectangles, setNumberRectangles] = useState(27)
     const [delay, setDelay] = useState(500)
     const [arr, setArr] = useState([])
     const [active, setActive] = useState(false)
@@ -28,21 +28,23 @@ export default function Home() {
         let right = 2 * i + 2
 
         if (left < n && arr[left].props.height > arr[largest].props.height) {
+            await swap(left, largest, arr, setArr, delayRef, false);
             largest = left
         }
 
         if (right < n && arr[right].props.height > arr[largest].props.height) {
+            await swap(right, largest, arr, setArr, delayRef, false);
             largest = right
         }
 
         if (largest !== i) {
-            await swap(i, largest, arr, setArr, delayRef,true, false, false, lastIndex, setLastIndex)
+            await swap(i, largest, arr, setArr, delayRef,true)
             await heapify(n, largest)
         }
     }
 
     let heapSort = async () => {
-        if (isSorted(arr)) {
+        if (isSorted(arr) || active) {
             setAllGreen(arr, setArr)
             return
         }
@@ -53,7 +55,7 @@ export default function Home() {
         }
 
         for (let i = arr.length - 1; i > 0; i--) {
-            await swap(0, i, arr, setArr, delayRef, true, false, false, lastIndex, setLastIndex)
+            await swap(0, i, arr, setArr, delayRef, true, HEAP)
             await heapify(i, 0)
         }
         setAllGreen(arr, setArr)

@@ -1,8 +1,8 @@
 // Swaps if i > j, returns true if a swap occurred
-import {isSorted, sleep} from "./helperMethods";
+import {BUBBLE, HEAP, SELECTION, sleep} from "./helperMethods";
 import {setColor, setLeftAnimation, setRightAnimation} from "./animationHelperMethods";
 
-export default async function swap(i, j, arr, setArr, delayRef, shouldSwap, isBubble, isSelection, lastIndex, setLastIndex, ) {
+export default async function swap(i, j, arr, setArr, delayRef, shouldSwap, swapType, lastIndex, setLastIndex) {
     let dif = j - i
 
     // Set orange
@@ -32,18 +32,21 @@ export default async function swap(i, j, arr, setArr, delayRef, shouldSwap, isBu
     await sleep(delayRef.current)
 
     // Set to i to green if selectionSort
-    if (isSelection) {
-        console.log('setting ' + i + ' to green')
+    if (swapType === SELECTION) {
         arr[i] = setColor(arr[i], '#00ee3f')
     } else {
         arr[i] = setColor(arr[i], '#0070f3')
     }
     // Return to blue, unless last index (if isBubble)
-    if (isBubble && j === lastIndex) {
+    if (swapType === BUBBLE && j === lastIndex) {
         arr[j] = setColor(arr[j], '#00ee3f')
         setLastIndex(lastIndex - 1);
     } else {
         arr[j] = setColor(arr[j], '#0070f3')
+    }
+    // Make the largest green if isHeap
+    if (swapType === HEAP && shouldSwap) {
+        arr[j] = setColor(arr[j], '#00ee3f')
     }
     setArr([...arr])
     await sleep(delayRef.current)

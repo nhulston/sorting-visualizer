@@ -3,13 +3,13 @@ import styles from '../styles/Home.module.css'
 import React, {useEffect, useRef, useState} from "react";
 import swap from "../util/swap";
 import regenerate from "../util/regenerate";
-import {isSorted} from "../util/helperMethods";
-import {setAllGreen, setColor} from "../util/animationHelperMethods";
+import {BUBBLE, isSorted} from "../util/helperMethods";
+import {setAllGreen} from "../util/animationHelperMethods";
 import Sort from "../components/Sort";
 
 export default function Home() {
     // Variables
-    const [numberRectangles, setNumberRectangles] = useState(12)
+    const [numberRectangles, setNumberRectangles] = useState(27)
     const [delay, setDelay] = useState(500)
     const [arr, setArr] = useState([])
     const [active, setActive] = useState(false)
@@ -28,7 +28,7 @@ export default function Home() {
 
 
     let bubbleSort = async () => {
-        if (isSorted(arr)) {
+        if (isSorted(arr) || active) {
             setAllGreen(arr, setArr)
             return
         }
@@ -41,7 +41,7 @@ export default function Home() {
                 if (shouldSwap) {
                     swapped = true;
                 }
-                await swap(j, j+1, arr, setArr, delayRef, shouldSwap, true, false, lastIndex, setLastIndex)
+                await swap(j, j+1, arr, setArr, delayRef, shouldSwap, BUBBLE, lastIndex, setLastIndex)
             }
 
             if (!swapped) {

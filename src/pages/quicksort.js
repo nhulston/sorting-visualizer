@@ -9,7 +9,7 @@ import Sort from "../components/Sort";
 
 export default function Home() {
     // Variables
-    const [numberRectangles, setNumberRectangles] = useState(12)
+    const [numberRectangles, setNumberRectangles] = useState(27)
     const [delay, setDelay] = useState(500)
     const [arr, setArr] = useState([])
     const [active, setActive] = useState(false)
@@ -33,11 +33,11 @@ export default function Home() {
                 i++;
             }
             if (i !== j && i >= 0 && j >= 0) {
-                await swap(i, j, arr, setArr, delayRef, shouldSwap, false, false)
+                await swap(i, j, arr, setArr, delayRef, shouldSwap)
             }
         }
         if (i + 1 !== high) {
-            await swap(i + 1, high, arr, setArr, delayRef, true, false, false);
+            await swap(i + 1, high, arr, setArr, delayRef, true);
         }
         return i + 1;
     }
@@ -51,7 +51,7 @@ export default function Home() {
     }
 
     let quicksort = async () => {
-        if (isSorted(arr)) {
+        if (isSorted(arr) || active) {
             setAllGreen(arr, setArr)
             return
         }

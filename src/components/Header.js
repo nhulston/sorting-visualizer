@@ -19,8 +19,8 @@ export default class Header extends Component {
                     <Text>Array Size</Text>
                     <Slider
                         min={4}
-                        max={20}
-                        defaultValue={12}
+                        max={50}
+                        defaultValue={27}
                         onChange={this.props.onChangeArrSize}
                     />
                 </SliderContainer>
@@ -29,7 +29,7 @@ export default class Header extends Component {
                     <Slider
                         min={10}
                         max={1500}
-                        defaultValue={755}
+                        defaultValue={1000}
                         onChange={this.props.onChangeSortingSpeed}
                     />
                 </SliderContainer>

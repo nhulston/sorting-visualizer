@@ -14,3 +14,8 @@ export function isSorted(arr) {
     }
     return true
 }
+
+export const BUBBLE = 0
+export const HEAP = 1
+export const SELECTION = 2
+// export const QUICK = 3 // Not needed
