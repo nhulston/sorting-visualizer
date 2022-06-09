@@ -25,30 +25,28 @@ export default function Home() {
           <Link href="/bubblesort">
             <a className={styles.card}>
               <h2>Bubble Sort &rarr;</h2>
-              <p>The simplest sorting algorithm with very high time complexity.</p>
+              <p>The simplest sorting algorithm with very high time complexity. Repeatedly swaps adjacent elements.</p>
             </a>
           </Link>
 
           <Link href="/selectionsort">
             <a className={styles.card}>
               <h2>Selection Sort &rarr;</h2>
-              <p>A recursive algorithm that sorts two halves, then merges the two halves.</p>
+              <p>A slight improvement to bubble sort that finds the smallest, unsorted element and puts it at the beginning.</p>
             </a>
           </Link>
 
           <Link href="/heapsort">
             <a className={styles.card}>
               <h2>Heap Sort &rarr;</h2>
-              <p>Lorem ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum ipsum </p>
+              <p>An improved selection sort that builds an array-backed max heap to quickly find the largest element.</p>
             </a>
           </Link>
 
           <Link href="/quicksort">
             <a className={styles.card}>
               <h2>Quick Sort &rarr;</h2>
-              <p>
-                Instantly deploy your Next.js site to a public URL with Vercel.
-              </p>
+              <p>Picks a pivot and partitions the array around the pivot point. It is generally much faster than heap sort.</p>
             </a>
           </Link>
         </div>

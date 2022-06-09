@@ -95,4 +95,11 @@ const Text = styled.p`
   color: white;
   font-size: ${props => 300 / props.quantity}px;
   margin: 0;
+
+  @media (max-width: 700px) {
+    font-size: ${props => 200 / props.quantity}px;
+  }
+  @media (max-width: 500px) {
+    font-size: ${props => 150 / props.quantity}px;
+  }
 `;
