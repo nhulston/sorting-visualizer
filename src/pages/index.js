@@ -17,10 +17,6 @@ export default function Home() {
           <a href="https://github.com/nhulston" target="_blank" rel="noreferrer">Algorithm Visualizer</a>
         </h1>
 
-        <p className={styles.description}>
-          <code className={styles.code}>Click an algorithm below to begin...</code>
-        </p>
-
         <div className={styles.grid}>
           <Link href="/bubblesort">
             <a className={styles.card}>

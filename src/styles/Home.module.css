@@ -24,7 +24,7 @@
 }
 
 .title {
-  margin: 0;
+  margin: 20px 0 0;
   line-height: 1.15;
   font-size: 4rem;
 }
@@ -55,6 +55,7 @@
   justify-content: center;
   flex-wrap: wrap;
   max-width: 800px;
+  margin-top: 50px;
 }
 
 .card {

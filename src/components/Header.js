@@ -23,9 +23,9 @@ export default class Header extends Component {
                     <SliderContainer>
                         <Text>Sorting Speed</Text>
                         <Slider
-                            min={10}
-                            max={1500}
-                            defaultValue={1000}
+                            min={0}
+                            max={100}
+                            defaultValue={50}
                             onChange={this.props.onChangeSortingSpeed}
                         />
                     </SliderContainer>

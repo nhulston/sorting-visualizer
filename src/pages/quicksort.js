@@ -10,7 +10,7 @@ import Sort from "../components/Sort";
 export default function Home() {
     // Variables
     const [numberRectangles, setNumberRectangles] = useState(27)
-    const [delay, setDelay] = useState(500)
+    const [delay, setDelay] = useState(188)
     const [arr, setArr] = useState([])
     const [active, setActive] = useState(false)
     const delayRef = useRef()
