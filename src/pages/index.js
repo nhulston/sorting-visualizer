@@ -13,8 +13,7 @@ export default function Home() {
 
       <main className={styles.main}>
         <h1 className={styles.title}>
-          Sorting<br/>
-          <a href="https://github.com/nhulston" target="_blank" rel="noreferrer">Algorithm Visualizer</a>
+          <a href="https://github.com/nhulston" target="_blank" rel="noreferrer">Sorting<br/>Algorithm Visualizer</a>
         </h1>
 
         <div className={styles.grid}>
